@@ -1,3 +1,4 @@
+**/appsettings.Development.json
 **/appsettings.local.json
 **/wwwroot/
 **/dist/

@@ -83,7 +83,8 @@ app.Use(async (HttpContext context, Func<Task> next) =>
         var path = context.Request.Path.Value?.ToLower();
         if (path?.StartsWith("/signin-oidc") == false && 
             path?.StartsWith("/signout-callback-oidc") == false &&
-            path?.StartsWith("/site.webmanifest") == false)
+            path?.StartsWith("/site.webmanifest") == false &&
+            path?.StartsWith("/.well-known/") == false)
         {
             context.Response.Redirect($"/MicrosoftIdentity/Account/SignIn?redirectUri={Uri.EscapeDataString(context.Request.Path)}");
             return;
