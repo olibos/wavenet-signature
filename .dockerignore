@@ -1,0 +1,5 @@
+**/appsettings.local.json
+**/wwwroot/
+**/dist/
+**/bin/
+**/obj/

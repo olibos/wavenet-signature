@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --wavenet-header: #222246;
+  --wavenet-primary: #0c4a9a;
+  --wavenet-accent: #1169da;
+  --wavenet-body: #ffffff;
+  --wavenet-text: #333333;
+  --wavenet-gray: #808080;
+}
+
+@theme {
+  --color-primary: var(--wavenet-primary);
+  --color-primary-dark: var(--wavenet-header);
+  --color-accent: var(--wavenet-accent);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer components {
+  .signature-preview {
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+  }
+  
+  .signature-preview table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  .signature-preview td {
+    padding: 0;
+    vertical-align: top;
+  }
+}
