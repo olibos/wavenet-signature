@@ -22,6 +22,7 @@ type FormData = {
   city?: string,
   country?: string,
   usePicture?: boolean,
+  useEcoFooter?: boolean,
   photo?: string,
 };
 function App() {
@@ -41,6 +42,7 @@ function App() {
       phone: parsePhoneNumber(data?.mobilePhone ?? '', defaultCountry)?.number ?? '',
       photo: data?.photo,
       usePicture: true,
+      useEcoFooter: true,
       address: data?.streetAddress ?? 'Rue de l\'Artisanat 16',
       postalCode: data?.postalCode ?? '7900',
       city: data?.city ?? 'Leuze-en-Hainaut',
@@ -50,7 +52,7 @@ function App() {
   const [copySuccess, setCopySuccess] = useState(false);
   const signatureRef = useRef<HTMLDivElement>(null);
 
-  function update(key: keyof typeof formData | (string & {}), value: string | boolean | undefined) {
+  function update(key: keyof FormData | (string & {}), value: string | boolean | undefined) {
     setFormData(prev => ({
       ...prev,
       [key]: value
@@ -94,9 +96,8 @@ function App() {
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Form Section */}
         <div className="bg-white rounded-2xl shadow-xl p-8 h-fit">
-          <h2 className="text-2xl font-display font-semibold text-wavenet-primary mb-6">
+          <h2 className="text-2xl font-display font-semibold text-primary mb-6">
             Your Information
           </h2>
 
@@ -113,9 +114,7 @@ function App() {
                       />
                     </div>
                   </div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <Toggle checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} /> Profile Picture
-                  </label>
+                  <Toggle checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} label="Use profile picture in signature" /> 
                 </>
               )}
             </div>
@@ -131,7 +130,7 @@ function App() {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -145,7 +144,7 @@ function App() {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -160,7 +159,7 @@ function App() {
                   name="jobTitle"
                   value={formData.jobTitle}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -175,7 +174,7 @@ function App() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -192,7 +191,7 @@ function App() {
                   defaultCountry="BE"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -207,7 +206,7 @@ function App() {
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -222,7 +221,7 @@ function App() {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -237,7 +236,7 @@ function App() {
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -252,17 +251,21 @@ function App() {
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wavenet-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
-            </div>          </form>
+              <div className="sm:col-span-2">
+                <Toggle checked={formData.useEcoFooter} onChange={(checked) => update('useEcoFooter', checked)} label='Eco Footer?' />
+              </div>
+            </div>
+          </form>
         </div>
 
         <div className="space-y-6">
           <div className="bg-white rounded-2xl shadow-xl p-2 lg:p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-display font-semibold text-wavenet-primary">
+              <h2 className="text-2xl font-display font-semibold text-primary">
                 Preview
               </h2>
               <button
@@ -298,7 +301,7 @@ function App() {
             </div>
 
             <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h3 className="text-sm font-semibold text-wavenet-primary mb-2 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
