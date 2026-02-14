@@ -1,22 +1,19 @@
 using Azure.Core;
 using Azure.Identity;
-using FastEndpoints;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Options;
 using Microsoft.Graph;
-using Microsoft.Identity.Web;
 using Wavenet.Signature;
+using Wavenet.Signature.Application.User.Queries.GetUserDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.local.json", optional: true);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-builder.Services.AddFastEndpoints();
-var entraIdSection = builder.Configuration.GetSection("EntraId");
+builder.Services
+    .AddOptions<EntraIdOptions>()
+    .BindConfiguration("EntraId");
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
@@ -27,10 +24,30 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownIPNetworks.Clear();
     options.KnownProxies.Clear();
 });
-builder.Services.Configure<MicrosoftIdentityOptions>(entraIdSection);
-builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApp(entraIdSection);
 
+var entraOptions = builder.Configuration
+    .GetSection("EntraId")
+    .Get<EntraIdOptions>() ?? throw new KeyNotFoundException("EntraIdOptions not found");
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = builder.Environment.IsProduction() ? "__Host-auth" : ".auth";
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+    })
+    .AddOpenIdConnect(options =>
+    {
+        options.Authority = $"{entraOptions.Instance}{entraOptions.TenantId}/v2.0";
+        options.ClientId = entraOptions.ClientId;
+        options.ClientSecret = entraOptions.ClientSecret;
+        options.CallbackPath = entraOptions.CallbackPath;
+        options.SignedOutCallbackPath = entraOptions.SignedOutCallbackPath;
+    });
 
 builder.Services.AddAuthorization(options => options.FallbackPolicy = options.DefaultPolicy);
 builder.Services.AddKeyedSingleton<TokenCredential>(CredentialType.ManagedIdentity, new DefaultAzureCredential());
@@ -39,20 +56,18 @@ builder.Services.AddKeyedSingleton<TokenCredential>(
     (services, _) =>
     {
         var identity = services.GetRequiredKeyedService<TokenCredential>(CredentialType.ManagedIdentity);
-        var entraId = services.GetRequiredService<IOptions<MicrosoftIdentityOptions>>().Value;
-
-        if (entraId.ClientSecret is not null)
+        if (entraOptions.ClientSecret is not null)
         {
-            return new ClientSecretCredential(entraId.TenantId, entraId.ClientId, entraId.ClientSecret);
+            return new ClientSecretCredential(entraOptions.TenantId, entraOptions.ClientId, entraOptions.ClientSecret);
         }
         
         return new ClientAssertionCredential(
-            tenantId: entraId.TenantId,
-            clientId: entraId.ClientId,
+            entraOptions.TenantId, 
+            entraOptions.ClientId,
             async cancellationToken =>
             {
                 var tokenContext = new TokenRequestContext(
-                    scopes: [$"api://AzureADTokenExchange"]
+                    scopes: ["api://AzureADTokenExchange"]
                 );
     
                 var accessToken = await identity.GetTokenAsync(tokenContext, cancellationToken);
@@ -63,6 +78,12 @@ builder.Services.AddKeyedSingleton<TokenCredential>(
 
 builder.Services.AddSingleton<GraphServiceClient>(services =>
     new GraphServiceClient(services.GetRequiredKeyedService<TokenCredential>(CredentialType.Graph)));
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
+});
+
 var app = builder.Build();
 app.UseForwardedHeaders();
 
@@ -74,26 +95,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-// Redirect unauthenticated users to login
-app.Use(async (HttpContext context, Func<Task> next) =>
-{
-    if (!context.User.Identity?.IsAuthenticated ?? true)
-    {
-        var path = context.Request.Path.Value?.ToLower();
-        if (path?.StartsWith("/signin-oidc") == false && 
-            path?.StartsWith("/signout-callback-oidc") == false &&
-            path?.StartsWith("/site.webmanifest") == false &&
-            path?.StartsWith("/.well-known/") == false)
-        {
-            context.Response.Redirect($"/MicrosoftIdentity/Account/SignIn?redirectUri={Uri.EscapeDataString(context.Request.Path)}");
-            return;
-        }
-    }
-    
-    await next();
-});
-
+app.MapGetUserDetailsQuery();
+// fix issue for chrome sending request without cookies
 app.MapGet("/site.webmanifest", async context =>
     {
         await context.Response.SendFileAsync(
@@ -104,5 +107,4 @@ app.MapGet("/site.webmanifest", async context =>
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
-app.UseFastEndpoints();
 await app.RunAsync();
