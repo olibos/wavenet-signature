@@ -112,7 +112,7 @@ export function SignaturePreview({
                         <td style={{ verticalAlign: 'top' }}>
                             <div>
                                 <div style={nameStyle}>{name}</div>
-                                <div style={titleStyle}>{jobTitle}</div>
+                                {jobTitle && <div style={titleStyle}>{jobTitle}</div>}
                             </div>
 
                             <div style={{ marginBottom: '15px' }}>

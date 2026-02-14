@@ -24,6 +24,38 @@ body {
   min-height: 100vh;
 }
 
+/* dark page background */
+.dark body {
+  background: linear-gradient(135deg, #071028 0%, #06142b 100%);
+}
+
+/* Dark theme — follows OS `prefers-color-scheme: dark`. `html.dark` remains a manual override */
+@media (prefers-color-scheme: dark) {
+  :root, :host, html.dark {
+    /* brand / surface */
+    --wavenet-header: #0b1220;
+    --wavenet-primary: #0f1724; /* darker surface tone still available */
+    --wavenet-accent: #60a5fa; /* accent / readable heading color */
+    --wavenet-body: #071028;
+    --wavenet-text: #e6eef8;
+    --wavenet-gray: #9aa6b2;
+
+    /* improve heading / primary text contrast in dark mode */
+    --color-primary: var(--wavenet-accent);
+
+    /* adapt Tailwind built-in color variables so utilities like `text-gray-700` work */
+    --color-gray-700: #cbd5e1;
+    --color-blue-50: #041226;
+    --color-white: #ffffff;
+    --color-black: #000000;
+  }
+
+  /* page background when in dark mode */
+  body {
+    background: linear-gradient(135deg, #071028 0%, #06142b 100%);
+  }
+}
+
 * {
   box-sizing: border-box;
 }

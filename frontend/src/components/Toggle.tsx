@@ -14,14 +14,14 @@ export function Toggle({ label, checked, onChange }: Props) {
                     onChange={(e) => onChange(e.target.checked)}
                 />
                 <div
-                    className={`block w-14 h-8 rounded-full transition ${checked ? 'bg-accent' : 'bg-gray-300'}`}>
+                    className={`block w-14 h-8 rounded-full transition ${checked ? 'bg-accent' : 'bg-gray-300 dark:bg-gray-600'}`}>
                 </div>
                 <div
-                    className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform ${checked ? 'translate-x-6' : ''}`}>
+                    className={`absolute left-1 top-1 bg-white dark:bg-gray-100 w-6 h-6 rounded-full transition transform ${checked ? 'translate-x-6' : ''}`}>
                 </div>
             </div>
             {label && (
-                <div className="ml-3 text-gray-700 font-medium select-none inline-block">
+                <div className="ml-3 text-gray-700 dark:text-gray-300 font-medium select-none inline-block">
                     {label}
                 </div>
             )}

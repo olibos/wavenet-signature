@@ -96,33 +96,31 @@ function App() {
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-2xl shadow-xl p-8 h-fit">
+        <div className="bg-white dark:bg-slate-800/70 dark:border dark:border-slate-700 rounded-2xl shadow-xl dark:shadow-black/40 p-8 h-fit backdrop-blur-sm">
           <h2 className="text-2xl font-display font-semibold text-primary mb-6">
             Your Information
           </h2>
 
           <form className="space-y-5">
-            <div>
-              {formData.photo && (
-                <>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="relative">
-                      <img
-                        src={`data:image/jpeg;base64,${formData.photo}`}
-                        alt="Profile"
-                        className="w-20 h-20 rounded-full object-cover border-2 border-accent"
-                      />
-                    </div>
+            {formData.photo && (
+              <div>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="relative">
+                    <img
+                      src={`data:image/jpeg;base64,${formData.photo}`}
+                      alt="Profile"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-accent"
+                    />
                   </div>
-                  <Toggle checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} label="Use profile picture in signature" /> 
-                </>
-              )}
-            </div>
+                </div>
+                <Toggle checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} label="Use profile picture in signature" />
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                  First Name *
+                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  First Name
                 </label>
                 <input
                   type="text"
@@ -130,13 +128,13 @@ function App() {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Last Name *
+                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Last Name
                 </label>
                 <input
                   type="text"
@@ -144,14 +142,14 @@ function App() {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
-                  Job Title *
+                <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Job Title
                 </label>
                 <input
                   type="text"
@@ -159,14 +157,14 @@ function App() {
                   name="jobTitle"
                   value={formData.jobTitle}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email
                 </label>
                 <input
                   type="email"
@@ -174,14 +172,14 @@ function App() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone *
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Phone
                 </label>
                 <PhoneInput
                   type="tel"
@@ -191,14 +189,14 @@ function App() {
                   defaultCountry="BE"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                  Address *
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Address
                 </label>
                 <input
                   type="text"
@@ -206,14 +204,14 @@ function App() {
                   name="address"
                   value={formData.address}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
-                  Postal Code *
+                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Postal Code
                 </label>
                 <input
                   type="text"
@@ -221,14 +219,14 @@ function App() {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                  City *
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  City
                 </label>
                 <input
                   type="text"
@@ -236,14 +234,14 @@ function App() {
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-2">
-                  Country *
+                <label htmlFor="country" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Country
                 </label>
                 <input
                   type="text"
@@ -251,7 +249,7 @@ function App() {
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
@@ -263,7 +261,7 @@ function App() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl shadow-xl p-2 lg:p-8">
+          <div className="bg-white dark:bg-slate-800/70 dark:border dark:border-slate-700 rounded-2xl shadow-xl dark:shadow-black/40 p-2 lg:p-8 backdrop-blur-sm">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-display font-semibold text-primary">
                 Preview
@@ -293,21 +291,21 @@ function App() {
               </button>
             </div>
 
-            <div className="border-2 border-gray-100 rounded-lg p-6 bg-white signature-preview" ref={signatureRef}>
+            <div className="border-2 border-gray-100 dark:border-gray-700 rounded-lg p-6 bg-white signature-preview text-gray-900" ref={signatureRef}>
               <SignaturePreview
                 {...formData}
                 name={`${formData.firstName} ${formData.lastName}`}
                 profileImage={formData.usePicture ? formData.photo : undefined} />
             </div>
 
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-slate-800/60 border border-blue-200 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-300">
               <h3 className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 How to use in Outlook
               </h3>
-              <ol className="text-sm text-gray-700 space-y-1.5 ml-7 list-decimal">
+              <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-1.5 ml-7 list-decimal">
                 <li>Click "Copy Signature" button above</li>
                 <li>Open <a href="https://outlook.office.com/mail/options/accounts-category/signatures-subcategory" target="_blank" rel="noopener noreferrer" className="text-accent">Outlook Settings</a></li>
                 <li>Navigate to Mail → Compose and reply</li>

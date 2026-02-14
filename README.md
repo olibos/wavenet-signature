@@ -1,6 +1,6 @@
 # Wavenet Mail Signature
 
-A small web application to generate and serve mail signatures. The project contains a React + Vite frontend and a .NET 10 (Native AOT) backend that serves the built frontend and provides authentication via Azure Entra ID + Microsoft Graph.
+A small web application to generate signatures. The project contains a React + Vite frontend and a .NET 10 (Native AOT) backend that serves the built frontend and provides authentication via Azure Entra ID + Microsoft Graph.
 
 ---
 
@@ -123,13 +123,3 @@ Important runtime env vars:
 ## Contributing
 
 - Open an issue or submit a PR. Keep changes small and add tests where appropriate.
-
----
-
-## License
-
-No LICENSE file found in the repository — add one if you plan to publish this project publicly.
-
----
-
-If you want, I can add a quick `docker-compose` or sample `appsettings.local.json` with placeholders. 💡
