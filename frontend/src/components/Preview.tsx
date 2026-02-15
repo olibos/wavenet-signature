@@ -87,6 +87,7 @@ export function SignaturePreview({
     email,
     phone: phoneNumberRaw,
     address,
+    postalCode,
     city,
     country,
     profileImage,
@@ -132,7 +133,7 @@ export function SignaturePreview({
                                 )}
                                 <div style={contactItemStyle}>
                                     <span>📍 </span>
-                                    <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${city} ${country}`}>{address} | {city} | {country}</a></span>
+                                    <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`}>{address} | {postalCode} {city} | {country}</a></span>
                                 </div>
                             </div>
                         </td>
