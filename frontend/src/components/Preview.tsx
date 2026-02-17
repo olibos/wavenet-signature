@@ -4,13 +4,18 @@ import logo from '@/images/wavenet.png?base64';
 import { useQuery } from "@tanstack/react-query";
 import { optimizeProfileImage } from "@/helpers/images";
 
+const outerTableStyle: CSSProperties = {
+    width: "100%",
+    borderCollapse: "collapse",
+    maxWidth: "600px",
+};
+
 const containerStyle: CSSProperties = {
-    fontFamily: 'Arial, sans-serif',
-    fontSize: '13px',
-    lineHeight: '1.4',
-    color: '#333333',
-    maxWidth: '600px',
-    padding: '20px 0'
+    fontFamily: "Arial, sans-serif",
+    fontSize: "13px",
+    lineHeight: "1.4",
+    color: "#333333",
+    padding: "20px 0"
 };
 
 const tableStyle: CSSProperties = {
@@ -23,8 +28,7 @@ const photoStyle: CSSProperties = {
     height: 'auto',
     borderRadius: '50%',
     objectFit: 'cover',
-    display: 'block',
-    border: '2px solid #E0E0E0'
+    display: 'block'
 };
 
 const nameStyle: CSSProperties = {
@@ -100,59 +104,65 @@ export function SignaturePreview({
         enabled: !!profileImage
     });
     return (
-        <div style={containerStyle}>
-            <table style={tableStyle} cellPadding="0" cellSpacing="0">
-                <tbody>
-                    <tr>
-                        {image && (
-                            <td style={{ width: '80px', paddingRight: '20px', verticalAlign: 'top' }}>
-                                <img src={image} alt={name} style={photoStyle} width={width} height={height} />
-                            </td>
+        <table role="presentation" cellPadding="0" cellSpacing="0" width="600" style={outerTableStyle}>
+            <tbody>
+                <tr>
+                    <td style={containerStyle}>
+                        <table style={tableStyle} cellPadding="0" cellSpacing="0">
+                            <tbody>
+                                <tr>
+                                    {image && (
+                                        <td style={{ width: '80px', paddingRight: '20px', verticalAlign: 'top' }}>
+                                            <img src={image} alt={name} style={photoStyle} width={width} height={height} />
+                                        </td>
+                                    )}
+
+                                    <td style={{ verticalAlign: 'top' }}>
+                                        <div>
+                                            <div style={nameStyle}>{name}</div>
+                                            {jobTitle && <div style={titleStyle}>{jobTitle}</div>}
+                                        </div>
+
+                                        <div style={{ marginBottom: '15px' }}>
+                                            <div style={contactItemStyle}>
+                                                <span>📧 </span>
+                                                <a target="_blank" rel="noopener noreferrer" href={`mailto:${email}`} style={linkStyle}>
+                                                    {email}
+                                                </a>
+                                            </div>
+                                            {phone && (
+                                                <div style={contactItemStyle}>
+                                                    <span>📱 </span>
+                                                    <a href={`tel:${phone.number}`} style={linkStyle}>
+                                                        {phone.formatInternational()}
+                                                    </a>
+                                                </div>
+                                            )}
+                                            <div style={contactItemStyle}>
+                                                <span>📍 </span>
+                                                <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`}>{address} | {postalCode} {city} | {country}</a></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {useEcoFooter && (
+                            <div style={ecoFooterStyle}>
+                                Think green, keep it on the screen. 🌳
+                            </div>
                         )}
 
-                        <td style={{ verticalAlign: 'top' }}>
-                            <div>
-                                <div style={nameStyle}>{name}</div>
-                                {jobTitle && <div style={titleStyle}>{jobTitle}</div>}
-                            </div>
+                        <div style={logoSectionStyle}>
+                            <a href="https://www.wavenet.be/" style={{ display: 'inline-block', textDecoration: 'none' }}>
+                                <img src={logo} alt="Wavenet" style={logoStyle} />
+                            </a>
+                        </div>
 
-                            <div style={{ marginBottom: '15px' }}>
-                                <div style={contactItemStyle}>
-                                    <span>📧 </span>
-                                    <a target="_blank" rel="noopener noreferrer" href={`mailto:${email}`} style={linkStyle}>
-                                        {email}
-                                    </a>
-                                </div>
-                                {phone && (
-                                    <div style={contactItemStyle}>
-                                        <span>📱 </span>
-                                        <a href={`tel:${phone.number}`} style={linkStyle}>
-                                            {phone.formatInternational()}
-                                        </a>
-                                    </div>
-                                )}
-                                <div style={contactItemStyle}>
-                                    <span>📍 </span>
-                                    <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`}>{address} | {postalCode} {city} | {country}</a></span>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            {useEcoFooter && (
-                <div style={ecoFooterStyle}>
-                    Think green, keep it on the screen. 🌳
-                </div>
-            )}
-
-            <div style={logoSectionStyle}>
-                <a href="https://www.wavenet.be/" style={{ display: 'inline-block', textDecoration: 'none' }}>
-                    <img src={logo} alt="Wavenet" style={logoStyle} />
-                </a>
-            </div>
-
-        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     )
 }
