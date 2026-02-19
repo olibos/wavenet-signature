@@ -73,9 +73,22 @@ const ecoFooterStyle: CSSProperties = {
     fontStyle: 'italic'
 };
 
+const bookingButton: CSSProperties = {
+    display: 'inline-block',
+    padding: '8px 16px',
+    backgroundColor: '#0078D4',
+    color: '#FFFFFF',
+    textDecoration: 'none',
+    borderRadius: '4px',
+    fontSize: '12px',
+    fontWeight: '500',
+    marginTop: '12px'
+}
+
 type Props = {
     name?: string;
     jobTitle?: string;
+    bookingUrl?: string;
     email?: string;
     phone?: string;
     address?: string;
@@ -88,6 +101,7 @@ type Props = {
 export function SignaturePreview({
     name,
     jobTitle,
+    bookingUrl,
     email,
     phone: phoneNumberRaw,
     address,
@@ -142,6 +156,13 @@ export function SignaturePreview({
                                                 <span>📍 </span>
                                                 <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`}>{address} | {postalCode} {city} | {country}</a></span>
                                             </div>
+                                            {bookingUrl && (
+                                                <div style={{ marginTop: '10px' }}>
+                                                    <a href={bookingUrl} style={bookingButton}>
+                                                        📅 Planifier un rendez-vous
+                                                    </a>
+                                                </div>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>
