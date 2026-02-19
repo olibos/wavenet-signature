@@ -15,6 +15,7 @@ type FormData = {
   firstName?: string,
   lastName?: string,
   jobTitle?: string,
+  bookingUrl?: string,
   email?: string,
   phone?: string,
   address?: string,
@@ -39,6 +40,7 @@ function App() {
       firstName: data?.firstName ?? '',
       lastName: data?.lastName ?? '',
       jobTitle: data?.jobTitle ?? '',
+      bookingUrl: '',
       phone: parsePhoneNumber(data?.mobilePhone ?? '', defaultCountry)?.number ?? '',
       photo: data?.photo,
       usePicture: true,
@@ -248,6 +250,21 @@ function App() {
                   id="country"
                   name="country"
                   value={formData.country}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  required
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label htmlFor="bookingUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Booking (<a href="https://outlook.office.com/bookwithme/me" target="_blank" className="text-accent" rel="noopener noreferrer">🛈︎ information about how to book a meeting with you</a>)
+                </label>
+                <input
+                  type="text"
+                  id="bookingUrl"
+                  name="bookingUrl"
+                  value={formData.bookingUrl}
+                  placeholder='https://outlook.office.com/bookwithme/user/...'
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
