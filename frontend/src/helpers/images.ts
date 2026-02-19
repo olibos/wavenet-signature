@@ -1,4 +1,4 @@
-export function optimizeProfileImage(base64Input: string, maxSize = 140, quality = 0.9, round = true) {
+export function optimizeProfileImage(base64Input: string, maxSize = 120, quality = 0.9, round = true) {
   return new Promise<[string, number, number]>((resolve, reject) => {
     const img = new Image();
 
