@@ -1,4 +1,4 @@
-export function optimizeProfileImage(base64Input: string, maxSize = 120, quality = 0.8, round = true) {
+export function optimizeProfileImage(base64Input: string, maxSize = 140, quality = 0.9, round = true) {
   return new Promise<[string, number, number]>((resolve, reject) => {
     const img = new Image();
 
@@ -23,8 +23,6 @@ export function optimizeProfileImage(base64Input: string, maxSize = 120, quality
       canvas.width = size;
       canvas.height = size;
       if (round){
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0, 0, size, size);
         ctx.beginPath();
         ctx.arc(center, center, center, 0, Math.PI * 2);
         ctx.closePath();
@@ -41,8 +39,8 @@ export function optimizeProfileImage(base64Input: string, maxSize = 120, quality
         ctx.stroke();
       }
 
-      const jpegDataUri = canvas.toDataURL("image/jpeg", quality);
-      resolve([jpegDataUri, size, size]);
+      const dataUri = canvas.toDataURL("image/webp", quality);
+      resolve([dataUri, size, size]);
     };
 
     img.onerror = reject;
