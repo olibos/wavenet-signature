@@ -1,9 +1,8 @@
 name: Build & publish Docker image
 
 on:
-  push:
-    branches: [ 'main' ]
-  workflow_dispatch:
+  release:
+    types: [published]
 
 
 permissions:
@@ -39,12 +38,13 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.IMAGE_NAME }}:${{ github.event.release.tag_name }}
             ${{ env.IMAGE_NAME }}:latest
           provenance: true
           sbom: true
 
       - name: Attest image
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.push.outputs.digest }}
