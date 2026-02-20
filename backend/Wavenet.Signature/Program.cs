@@ -3,17 +3,26 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Graph;
 using Wavenet.Signature;
 using Wavenet.Signature.Application.User.Queries.GetUserDetails;
+using Wavenet.Signature.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.AddServerHeader = false;
+});
 builder.Configuration.AddJsonFile("appsettings.local.json", optional: true);
 
 builder.Services
     .AddOptions<EntraIdOptions>()
     .BindConfiguration("EntraId");
+builder.Services.Configure<HstsOptions>(options =>
+{
+    options.MaxAge = TimeSpan.FromDays(365);
+});
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders =
@@ -92,6 +101,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 app.UseHttpsRedirection();
+app.UseHsts();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -105,6 +115,7 @@ app.MapGet("/site.webmanifest", async context =>
     .AllowAnonymous();
 
 app.UseDefaultFiles();
+app.UseSecurityHeaders();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 await app.RunAsync();

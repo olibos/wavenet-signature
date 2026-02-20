@@ -184,6 +184,7 @@ function App() {
                   Phone
                 </label>
                 <PhoneInput
+                  flagUrl='/flags/{XX}.svg'
                   type="tel"
                   id="phone"
                   name="phone"
