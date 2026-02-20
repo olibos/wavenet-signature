@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 const csp = {
   "default-src": ["'none'"],
   "script-src": ["'report-sample'", "'self'"],
-  "style-src": ["'report-sample'", "'self'"],
+  "style-src": ["'report-sample'", "'self'", "'unsafe-inline'"],
   "img-src": ["'self'", "https://purecatamphetamine.github.io/country-flag-icons/", "data:"],
   "manifest-src": ["'self'"],
   "connect-src": ["'self'"],
@@ -16,7 +16,6 @@ const csp = {
 const config = defineConfig(({ mode }) => {
   function patch(csp: Record<string, string[]>) {
     if (mode === 'development') {
-      csp['style-src'].push("'unsafe-inline'");
       csp['script-src'].push("'unsafe-inline'");
     }
     return csp;
