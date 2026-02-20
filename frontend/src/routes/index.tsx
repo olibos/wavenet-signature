@@ -129,10 +129,12 @@ function App() {
                   id="firstName"
                   name="firstName"
                   autoComplete="given-name"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   value={formData.firstName}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
               <div>
@@ -144,10 +146,12 @@ function App() {
                   id="lastName"
                   name="lastName"
                   autoComplete="family-name"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   value={formData.lastName}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -162,7 +166,6 @@ function App() {
                   value={formData.jobTitle}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -175,10 +178,12 @@ function App() {
                   id="email"
                   name="email"
                   autoComplete="email"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -192,12 +197,14 @@ function App() {
                   id="phone"
                   autoComplete="tel"
                   name="phone"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   international={false}
                   defaultCountry="BE"
                   value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -211,9 +218,11 @@ function App() {
                   name="address"
                   value={formData.address}
                   autoComplete="street-address"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -228,8 +237,10 @@ function App() {
                   autoComplete="postal-code"
                   value={formData.postalCode}
                   onChange={handleInputChange}
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -244,7 +255,6 @@ function App() {
                   value={formData.city}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
 
@@ -257,10 +267,12 @@ function App() {
                   id="country"
                   name="country"
                   autoComplete="country-name"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   value={formData.country}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
               <div className="sm:col-span-2">
@@ -274,9 +286,11 @@ function App() {
                   value={formData.bookingUrl}
                   placeholder='https://outlook.office.com/bookwithme/user/...'
                   autoComplete="url"
+                  data-bwignore="true"
+                  data-lpignore="true"
+                  data-1p-ignore="true"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                  required
                 />
               </div>
               <div className="sm:col-span-2">
