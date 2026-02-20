@@ -58,7 +58,7 @@ builder.Services.AddAuthentication(options =>
         options.SignedOutCallbackPath = entraOptions.SignedOutCallbackPath;
     });
 
-builder.Services.AddAuthorization(options => options.FallbackPolicy = options.DefaultPolicy);
+builder.Services.AddAuthorization();
 builder.Services.AddKeyedSingleton<TokenCredential>(CredentialType.ManagedIdentity, new DefaultAzureCredential());
 builder.Services.AddKeyedSingleton<TokenCredential>(
     CredentialType.Graph,
@@ -106,16 +106,32 @@ app.UseHsts();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapGetUserDetailsQuery();
-// fix issue for chrome sending request without cookies
-app.MapGet("/site.webmanifest", async context =>
-    {
-        await context.Response.SendFileAsync(
-            Path.Combine(app.Environment.WebRootPath, "site.webmanifest"));
-    })
-    .AllowAnonymous();
 
 app.UseDefaultFiles();
 app.UseSecurityHeaders();
-app.UseStaticFiles();
-app.MapFallbackToFile("index.html");
+app.MapStaticAssets();
+app.MapFallback(async context =>
+{
+    var headers = context.Response.Headers;
+    headers.ContentSecurityPolicy =
+        "default-src 'none'; " +
+        "script-src 'report-sample' 'self'; " +
+        "style-src 'report-sample' 'self' 'unsafe-inline'; " +
+        "img-src 'self' data: https://purecatamphetamine.github.io/country-flag-icons/; " +
+        "manifest-src 'self'; " +
+        "connect-src 'self'; " +
+        "frame-ancestors 'none'; " +
+        "upgrade-insecure-requests";
+
+    headers.XFrameOptions = "DENY";
+    headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+    headers["Cross-Origin-Opener-Policy"] = "same-origin";
+    headers["Cross-Origin-Embedder-Policy"] = "require-corp";
+    headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=()";
+    headers.ContentType = "text/html; charset=utf-8";
+
+    await context.Response.SendFileAsync(
+        Path.Combine(app.Environment.WebRootPath, "index.html"));
+}).RequireAuthorization();
+
 await app.RunAsync();
