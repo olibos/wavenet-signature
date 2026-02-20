@@ -115,7 +115,7 @@ function App() {
                     />
                   </div>
                 </div>
-                <Toggle checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} label="Use profile picture in signature" />
+                <Toggle id="usePicture" checked={formData.usePicture} onChange={(checked) => update('usePicture', checked)} label="Use profile picture in signature" />
               </div>
             )}
 
@@ -128,6 +128,7 @@ function App() {
                   type="text"
                   id="firstName"
                   name="firstName"
+                  autoComplete="given-name"
                   value={formData.firstName}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
@@ -142,6 +143,7 @@ function App() {
                   type="text"
                   id="lastName"
                   name="lastName"
+                  autoComplete="family-name"
                   value={formData.lastName}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
@@ -172,6 +174,7 @@ function App() {
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
@@ -187,6 +190,7 @@ function App() {
                   flagUrl='/flags/{XX}.svg'
                   type="tel"
                   id="phone"
+                  autoComplete="tel"
                   name="phone"
                   international={false}
                   defaultCountry="BE"
@@ -206,6 +210,7 @@ function App() {
                   id="address"
                   name="address"
                   value={formData.address}
+                  autoComplete="street-address"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
@@ -220,6 +225,7 @@ function App() {
                   type="text"
                   id="postalCode"
                   name="postalCode"
+                  autoComplete="postal-code"
                   value={formData.postalCode}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
@@ -250,6 +256,7 @@ function App() {
                   type="text"
                   id="country"
                   name="country"
+                  autoComplete="country-name"
                   value={formData.country}
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
@@ -266,13 +273,14 @@ function App() {
                   name="bookingUrl"
                   value={formData.bookingUrl}
                   placeholder='https://outlook.office.com/bookwithme/user/...'
+                  autoComplete="url"
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
                   required
                 />
               </div>
               <div className="sm:col-span-2">
-                <Toggle checked={formData.useEcoFooter} onChange={(checked) => update('useEcoFooter', checked)} label='Eco Footer?' />
+                <Toggle id="useEcoFooter" checked={formData.useEcoFooter} onChange={(checked) => update('useEcoFooter', checked)} label='Eco Footer?' />
               </div>
             </div>
           </form>

@@ -1,9 +1,10 @@
 type Props = {
+    id: string;
     label?: string;
     checked?: boolean;
     onChange: (selected: boolean) => void;
 }
-export function Toggle({ label, checked, onChange }: Props) {
+export function Toggle({ id, label, checked, onChange }: Props) {
     return (
         <label className="items-center cursor-pointer inline-block align-middle">
             <div className="relative inline-block align-middle">
@@ -11,6 +12,7 @@ export function Toggle({ label, checked, onChange }: Props) {
                     type="checkbox"
                     className="sr-only"
                     checked={checked}
+                    id={id}
                     onChange={(e) => onChange(e.target.checked)}
                 />
                 <div
