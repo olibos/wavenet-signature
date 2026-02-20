@@ -21,7 +21,8 @@ public static class ApplicationBuilderExtensions
                 "img-src 'self' data: https://purecatamphetamine.github.io/country-flag-icons/; " +
                 "manifest-src 'self'; " +
                 "connect-src 'self'; " +
-                "frame-ancestors 'none';";
+                "frame-ancestors 'none'; " +
+                "upgrade-insecure-requests";
 
             headers.XFrameOptions = "DENY";
             headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
