@@ -5,5 +5,8 @@
   ],
   "labels": [
     "dependencies"
-  ]
+  ],
+  "github-actions": {
+    "pinDigests": true
+  }
 }
