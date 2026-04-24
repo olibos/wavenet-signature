@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { SignaturePreview } from '@/components/Preview';
-import type { CountryCode, E164Number } from 'node_modules/libphonenumber-js/types';
+import type { CountryCode, E164Number } from 'libphonenumber-js';
 import { useState, useRef, type ChangeEvent, type MouseEvent, useEffect } from 'react';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { Toggle } from '@/components/Toggle';
