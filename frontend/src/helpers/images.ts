@@ -39,7 +39,7 @@ export function optimizeProfileImage(base64Input: string, maxSize = 140, quality
         ctx.stroke();
       }
 
-      const dataUri = canvas.toDataURL("image/webp", quality);
+      const dataUri = canvas.toDataURL("image/png", quality);
       resolve([dataUri, size, size]);
     };
 
