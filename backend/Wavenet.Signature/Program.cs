@@ -107,12 +107,32 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapGetUserDetailsQuery();
 
+app.Use(async (context, next) =>
+{
+    // Vite fingerprints filenames under /assets with a content hash, so they are safe to cache forever
+    // and never need revalidation, making ETag/Last-Modified dead weight on every response.
+    if (context.Request.Path.StartsWithSegments("/assets"))
+    {
+        context.Response.OnStarting(() =>
+        {
+            var headers = context.Response.Headers;
+            headers.CacheControl = "public, max-age=31536000, immutable";
+            headers.Remove("ETag");
+            headers.Remove("Last-Modified");
+            return Task.CompletedTask;
+        });
+    }
+
+    await next();
+});
+
 app.UseDefaultFiles();
 app.UseSecurityHeaders();
 app.MapStaticAssets();
 app.MapFallback(async context =>
 {
     var headers = context.Response.Headers;
+#pragma warning disable S7039 Required for signature preview.
     headers.ContentSecurityPolicy =
         "default-src 'none'; " +
         "script-src 'self'; " +
@@ -122,6 +142,7 @@ app.MapFallback(async context =>
         "connect-src 'self'; " +
         "frame-ancestors 'none'; " +
         "upgrade-insecure-requests";
+#pragma warning restore S7039 Required for signature preview.
 
     headers.XFrameOptions = "DENY";
     headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
