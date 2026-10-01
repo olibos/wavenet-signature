@@ -115,8 +115,8 @@ app.MapFallback(async context =>
     var headers = context.Response.Headers;
     headers.ContentSecurityPolicy =
         "default-src 'none'; " +
-        "script-src 'report-sample' 'self'; " +
-        "style-src 'report-sample' 'self' 'unsafe-inline'; " +
+        "script-src 'self'; " +
+        "style-src 'self' 'unsafe-inline'; " +
         "img-src 'self' data: https://purecatamphetamine.github.io/country-flag-icons/; " +
         "manifest-src 'self'; " +
         "connect-src 'self'; " +
