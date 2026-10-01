@@ -1,52 +1,13 @@
 import { useMemo, type CSSProperties } from "react";
 import { parsePhoneNumber } from "react-phone-number-input";
-import logoAI from '@/images/wavenet-ai.png?base64';
 import { useQuery } from "@tanstack/react-query";
 import { optimizeProfileImage } from "@/helpers/images";
+import Logo from "@/images/wavenet.png?base64";
 
 const outerTableStyle: CSSProperties = {
     width: "100%",
     borderCollapse: "collapse",
     maxWidth: "600px",
-};
-
-const aiFooterStyle: CSSProperties = {
-    backgroundColor: "#222246",
-    borderRadius: '8px',
-    padding: '9px 25px',
-    color: '#FFFFFF',
-    fontFamily: 'Roboto, sans-serif',
-    fontWeight: 400,
-    fontStyle: 'italic',
-    fontSize: '12px',
-    lineHeight: '100%',
-    letterSpacing: '0%',
-    marginTop: '12px',
-};
-
-const aiFooterHeadingStyle: CSSProperties = {
-    fontFamily: 'Roboto, sans-serif',
-    fontWeight: 600,
-    fontStyle: 'normal',
-    fontSize: '28px',
-    lineHeight: '33px',
-    letterSpacing: '0%',
-    margin: '0 0 6px 0',
-};
-
-const aiFooterButtonStyle: CSSProperties = {
-    borderRadius: 4,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#FFFFFF',
-    color: '#FFFFFF',
-    textDecoration: 'none',
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingBottom: 8,
-    paddingLeft: 16,
-    margin: '12px 0',
-    display: 'inline-block',
 };
 
 const containerStyle: CSSProperties = {
@@ -149,6 +110,7 @@ export function SignaturePreview({
         queryFn: () => optimizeProfileImage(profileImage ?? ''),
         enabled: !!profileImage
     });
+    const builtInLogo = true;
     return (
         <table role="presentation" cellPadding="0" cellSpacing="0" width="600" style={outerTableStyle}>
             <tbody>
@@ -206,20 +168,13 @@ export function SignaturePreview({
                                 Think green, keep it on the screen. 🌳
                             </div>
                         )}
-
-                        <table role="presentation" cellPadding="0" cellSpacing="0" width="100%" style={{ borderCollapse: 'collapse', marginTop: '12px' }}>
-                            <tbody>
-                                <tr>
-                                    <td bgcolor="#222246" style={aiFooterStyle}>
-                                        <img src={logoAI} alt="Wavenet" style={logoStyle} />
-                                        <p style={aiFooterHeadingStyle}><span style={{ color: '#FFFFFF' }}>IA Starter Pack</span></p>
-                                        <p style={{ lineHeight: '100%' }}><span style={{ color: '#FFFFFF' }}>"Tout le monde parle d'IA, mais peu de personnes savent par où commencer... Wavenet vous propose de passer du flou artistique à deux agents fonctionnels en 5 jours."</span></p>
-                                        <div><a style={aiFooterButtonStyle} href="https://www.wavenet.be/fr/etudes-de-cas/starter-pack-ia/" target="_blank" rel="noopener noreferrer"><span style={{ color: '#FFFFFF' }}>Contactez-nous</span></a></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                        {builtInLogo && (
+                            <div style={{ textAlign: 'center', lineHeight: 1.4, marginTop: '15px', paddingTop: '15px', borderTop: '1px solid rgb(224, 224, 224)', fontFamily: 'Arial, sans-serif', fontSize: '13px' }}>
+                                <a href="https://www.wavenet.be/" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                                    <img src={Logo} alt="Wavenet" style={logoStyle} />
+                                </a>
+                            </div>
+                        )}
                     </td>
                 </tr>
             </tbody>
