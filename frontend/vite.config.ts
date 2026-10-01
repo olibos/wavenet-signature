@@ -1,8 +1,6 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
 import viteReact from '@vitejs/plugin-react'
-import viteTsConfigPaths from 'vite-tsconfig-paths'
-import { fileURLToPath, URL } from 'url'
 import tailwindcss from '@tailwindcss/vite'
 
 const csp = {
@@ -23,17 +21,43 @@ const config = defineConfig(({ mode }) => {
 
   return {
     resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      tsconfigPaths: true,
+    },
+    build: {
+      rolldownOptions: {
+        output: {
+          codeSplitting: {
+            minSize: 20000,
+            groups: [
+              {
+                name: 'phone',
+                test: /node_modules\/libphonenumber-js/,
+                priority: 30,
+              },
+              {
+                name: 'react-vendor',
+                test: /node_modules[\\/]react/,
+                priority: 20,
+              },
+              {
+                name: 'vendor',
+                test: /node_modules/,
+                priority: 10,
+              },
+              {
+                name: 'common',
+                minShareCount: 2,
+                minSize: 10000,
+                priority: 5,
+              },
+            ],
+          },
+        }
       },
     },
     plugins: [
       tailwindcss(),
       devtools(),
-      // this is the plugin that enables path aliases
-      viteTsConfigPaths({
-        projects: ['./tsconfig.json'],
-      }),
       viteReact(),
     ],
     server: {
@@ -51,7 +75,7 @@ const config = defineConfig(({ mode }) => {
         },
       },
     },
-  };
+  } satisfies UserConfig;
 });
 
 export default config
