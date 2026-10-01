@@ -20,7 +20,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@tanstack/devtools-vite": "^0.6.1",
+    "@tanstack/devtools-vite": "^0.8.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
