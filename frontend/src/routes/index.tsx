@@ -39,7 +39,7 @@ const offices: Office[] = [
   { id: 'leuze', label: 'Leuze-en-Hainaut', address: 'Rue de l\'Artisanat 16', postalCode: '7900', city: 'Leuze-en-Hainaut', country: 'Belgique' },
   { id: 'heron', label: 'Héron', address: 'Chaussée de Wavre 42', postalCode: '4217', city: 'Héron', country: 'Belgique' },
   { id: 'villeneuve-dascq', label: 'Villeneuve-d\'Ascq', address: 'Rue de l\'Épine 2', postalCode: '59650', city: 'Villeneuve-d\'Ascq', country: 'France' },
-  { id: 'tessares', label: 'Tessares', address: '1, Avenue Jean Monnet', postalCode: '1348', city: 'Louvain-la-Neuve', country: 'Belgique' },
+  { id: 'tessares', label: 'Tessares', address: 'Avenue Jean Monnet 1', postalCode: '1348', city: 'Louvain-la-Neuve', country: 'Belgique' },
 ];
 function App() {
   const [formData, setFormData] = useState<FormData>();
@@ -234,7 +234,7 @@ function App() {
                   defaultCountry="BE"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all focus-within:border-accent"
                 />
               </div>
 
