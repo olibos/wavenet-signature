@@ -169,11 +169,18 @@ export function SignaturePreview({
                             </div>
                         )}
                         {builtInLogo && (
-                            <div style={{ textAlign: 'center', lineHeight: 1.4, marginTop: '15px', paddingTop: '15px', borderTop: '1px solid rgb(224, 224, 224)', fontFamily: 'Arial, sans-serif', fontSize: '13px' }}>
-                                <a href="https://www.wavenet.be/" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                                    <img src={Logo} alt="Wavenet" style={logoStyle} />
-                                </a>
-                            </div>
+                            <table role="presentation" width="100%" cellPadding="0" cellSpacing="0" style={{ borderCollapse: 'collapse', marginTop: '15px' }}>
+                                <tbody>
+                                    <tr>
+                                        {/* border-top on td (not div) renders reliably across Outlook versions */}
+                                        <td style={{ textAlign: 'center', lineHeight: 1.4, paddingTop: '15px', borderTop: '1px solid rgb(224, 224, 224)', fontFamily: 'Arial, sans-serif', fontSize: '13px' }}>
+                                            <a href="https://www.wavenet.be/" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                                                <img src={Logo} alt="Wavenet" style={logoStyle} />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         )}
                     </td>
                 </tr>
