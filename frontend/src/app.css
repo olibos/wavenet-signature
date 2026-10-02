@@ -60,6 +60,10 @@ body {
   box-sizing: border-box;
 }
 
+.PhoneInputInput:focus{
+  outline: none;
+}
+
 @layer components {
   .signature-preview {
     font-family: Arial, sans-serif;
