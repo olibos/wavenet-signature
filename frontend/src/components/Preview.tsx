@@ -51,7 +51,9 @@ const contactItemStyle: CSSProperties = {
 
 const linkStyle: CSSProperties = {
     color: '#0563C1',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    fontFamily: 'Arial, sans-serif, serif, EmojiFont',
+    fontSize: '13px',
 };
 
 const logoStyle: CSSProperties = {
@@ -105,7 +107,7 @@ export function SignaturePreview({
     useEcoFooter
 }: Props) {
     const phone = useMemo(() => parsePhoneNumber(phoneNumberRaw ?? '', "BE"), [phoneNumberRaw]);
-    const { data: [image, width, height] = [] } = useQuery({
+    const { data: [image] = [] } = useQuery({
         queryKey: ['optimizedImage', profileImage],
         queryFn: () => optimizeProfileImage(profileImage ?? ''),
         enabled: !!profileImage
@@ -121,7 +123,7 @@ export function SignaturePreview({
                                 <tr>
                                     {image && (
                                         <td style={{ width: '80px', paddingRight: '20px', verticalAlign: 'top' }}>
-                                            <img src={image} alt={name} style={photoStyle} width={width} height={height} />
+                                            <img src={image} alt={name} style={photoStyle} width={80} height={80} />
                                         </td>
                                     )}
 
@@ -186,5 +188,5 @@ export function SignaturePreview({
                 </tr>
             </tbody>
         </table>
-    )
+    );
 }
