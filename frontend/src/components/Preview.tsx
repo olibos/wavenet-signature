@@ -51,7 +51,9 @@ const contactItemStyle: CSSProperties = {
 
 const linkStyle: CSSProperties = {
     color: '#0563C1',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    fontFamily: 'Arial, sans-serif, serif, EmojiFont',
+    fontSize: '13px',
 };
 
 const logoStyle: CSSProperties = {
@@ -112,6 +114,16 @@ export function SignaturePreview({
     });
     const builtInLogo = true;
     return (
+        <>
+        <style>
+  {`a.wvn-sig:link, a.wvn-sig:visited,
+  span.MsoHyperlink, span.MsoHyperlinkFollowed {
+    color: #0563C1;
+    text-decoration: none;
+    font-family: Arial, sans-serif, serif, EmojiFont;
+    font-size: 13px;
+  }`}
+</style>
         <table role="presentation" cellPadding="0" cellSpacing="0" width="600" style={outerTableStyle}>
             <tbody>
                 <tr>
@@ -121,7 +133,7 @@ export function SignaturePreview({
                                 <tr>
                                     {image && (
                                         <td style={{ width: '80px', paddingRight: '20px', verticalAlign: 'top' }}>
-                                            <img src={image} alt={name} style={photoStyle} width={width} height={height} />
+                                            <img src={image} alt={name} style={photoStyle} width={80} height={80} />
                                         </td>
                                     )}
 
@@ -134,21 +146,21 @@ export function SignaturePreview({
                                         <div style={{ marginBottom: '15px' }}>
                                             <div style={contactItemStyle}>
                                                 <span>📧 </span>
-                                                <a target="_blank" rel="noopener noreferrer" href={`mailto:${email}`} style={linkStyle}>
+                                                <a target="_blank" rel="noopener noreferrer" href={`mailto:${email}`} style={linkStyle} className="wvn-sig">
                                                     {email}
                                                 </a>
                                             </div>
                                             {phone && (
                                                 <div style={contactItemStyle}>
                                                     <span>📱 </span>
-                                                    <a href={`tel:${phone.number}`} style={linkStyle}>
+                                                    <a href={`tel:${phone.number}`} style={linkStyle} className="wvn-sig">
                                                         {phone.formatInternational()}
                                                     </a>
                                                 </div>
                                             )}
                                             <div style={contactItemStyle}>
                                                 <span>📍 </span>
-                                                <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`}>{address} | {postalCode} {city} | {country}</a></span>
+                                                <span><a target="_blank" rel="noopener noreferrer" style={linkStyle} href={`https://maps.google.com/?q=${address} ${postalCode} ${city} ${country}`} className="wvn-sig">{address} | {postalCode} {city} | {country}</a></span>
                                             </div>
                                             {bookingUrl && (
                                                 <div style={{ marginTop: '10px' }}>
@@ -186,5 +198,6 @@ export function SignaturePreview({
                 </tr>
             </tbody>
         </table>
+        </>
     )
 }
