@@ -338,12 +338,15 @@ function App() {
               </h3>
               <ol className="text-sm text-gray-700 dark:text-gray-300 space-y-1.5 ml-7 list-decimal">
                 <li>Click "Copy Signature" button above</li>
-                <li>Open <a href="https://outlook.office.com/mail/options/accounts-category/signatures-subcategory" target="_blank" rel="noopener noreferrer" className="text-accent">Outlook Settings</a></li>
-                <li>Navigate to Mail → Compose and reply</li>
-                <li>Under "Email signature", paste (Ctrl+V) the signature</li>
-                <li>Choose when to add signature automatically</li>
+                <li>Open <a href="https://outlook.office.com/mail/options/accounts-category/signatures-subcategory" target="_blank" rel="noopener noreferrer" className="text-accent">Outlook Web App Settings</a></li>
+                <li>Click "+ Add signature", give it a name</li>
+                <li>Paste (Ctrl+V) the signature in the editing box</li>
+                <li>Optional: Choose when to add signature automatically</li>
                 <li>Click "Save"</li>
               </ol>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-3 italic">
+                Your signature will then sync automatically to the Outlook desktop app (may take a few minutes).
+              </p>
             </div>
           </div>
         </div>
