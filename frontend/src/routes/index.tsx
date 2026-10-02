@@ -18,6 +18,7 @@ type FormData = {
   bookingUrl?: string,
   email?: string,
   phone?: string,
+  officeId?: string,
   address?: string,
   postalCode?: string,
   city?: string,
@@ -26,6 +27,20 @@ type FormData = {
   useEcoFooter?: boolean,
   photo?: string,
 };
+type Office = {
+  id: string,
+  label: string,
+  address: string,
+  postalCode: string,
+  city: string,
+  country: string,
+};
+const offices: Office[] = [
+  { id: 'leuze', label: 'Leuze-en-Hainaut', address: 'Rue de l\'Artisanat 16', postalCode: '7900', city: 'Leuze-en-Hainaut', country: 'Belgique' },
+  { id: 'heron', label: 'Héron', address: 'Chaussée de Wavre 42', postalCode: '4217', city: 'Héron', country: 'Belgique' },
+  { id: 'villeneuve-dascq', label: 'Villeneuve-d\'Ascq', address: 'Rue de l\'Épine 2', postalCode: '59650', city: 'Villeneuve-d\'Ascq', country: 'France' },
+  { id: 'tessares', label: 'Tessares', address: '1, Avenue Jean Monnet', postalCode: '1348', city: 'Louvain-la-Neuve', country: 'Belgique' },
+];
 function App() {
   const [formData, setFormData] = useState<FormData>();
 
@@ -35,6 +50,7 @@ function App() {
   });
 
   useEffect(() => {
+    const office = offices.find(o => o.address === data?.streetAddress) ?? offices[0];
     setFormData({
       email: data?.email ?? '',
       firstName: data?.firstName ?? '',
@@ -45,10 +61,11 @@ function App() {
       photo: data?.photo,
       usePicture: true,
       useEcoFooter: true,
-      address: data?.streetAddress ?? 'Rue de l\'Artisanat 16',
-      postalCode: data?.postalCode ?? '7900',
-      city: data?.city ?? 'Leuze-en-Hainaut',
-      country: data?.country ?? 'Belgique',
+      officeId: office.id,
+      address: office.address,
+      postalCode: office.postalCode,
+      city: office.city,
+      country: office.country,
     });
   }, [data]);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -68,6 +85,19 @@ function App() {
 
     const { name, value } = e.target;
     update(name, value);
+  };
+
+  const handleOfficeChange = (officeId: string) => {
+    const office = offices.find(o => o.id === officeId);
+    if (!office) return;
+    setFormData(prev => ({
+      ...prev,
+      officeId,
+      address: office.address,
+      postalCode: office.postalCode,
+      city: office.city,
+      country: office.country,
+    }));
   };
 
   const copyToClipboard = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -209,71 +239,32 @@ function App() {
               </div>
 
               <div className="sm:col-span-2">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Address
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Office Location
                 </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  autoComplete="street-address"
-                  data-bwignore="true"
-                  data-lpignore="true"
-                  data-1p-ignore="true"
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Postal Code
-                </label>
-                <input
-                  type="text"
-                  id="postalCode"
-                  name="postalCode"
-                  autoComplete="postal-code"
-                  value={formData.postalCode}
-                  onChange={handleInputChange}
-                  data-bwignore="true"
-                  data-lpignore="true"
-                  data-1p-ignore="true"
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label htmlFor="country" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  data-bwignore="true"
-                  data-lpignore="true"
-                  data-1p-ignore="true"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
-                />
+                <div className="space-y-2">
+                  {offices.map((office) => (
+                    <label
+                      key={office.id}
+                      htmlFor={`office-${office.id}`}
+                      className="flex items-start gap-3 p-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-slate-800 cursor-pointer hover:border-accent focus-within:border-accent transition-colors"
+                    >
+                      <input
+                        type="radio"
+                        id={`office-${office.id}`}
+                        name="officeId"
+                        value={office.id}
+                        checked={formData.officeId === office.id}
+                        onChange={() => handleOfficeChange(office.id)}
+                        className="mt-1 accent-accent focus:outline-none"
+                      />
+                      <span className="text-sm text-gray-900 dark:text-gray-100">
+                        <span className="font-medium block">{office.label}</span>
+                        <span className="text-gray-600 dark:text-gray-400">{office.address}, {office.postalCode} {office.city}{office.country !== 'Belgique' ? `, ${office.country}` : ''}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="bookingUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
