@@ -11,7 +11,7 @@ COPY frontend/src ./src
 
 RUN bun --bun run build
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base-aot
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS base-aot
 
 # Install Native AOT prerequisites
 RUN apt-get update && apt-get install -y --no-install-recommends \
